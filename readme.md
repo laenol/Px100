@@ -1,113 +1,64 @@
-# PX100 Robotic Arm Setup and Usage Guide
+# PX100 Robotic Arm Guide
 
-Welcome to the PX100 Robotic Arm project! This repository contains comprehensive guides and documentation for setting up, installing, and using the Interbotix PX100 robotic arm on Ubuntu systems.
-
-## Quick Start for First-Time Users
-
-If you're new to the PX100 or robotics in general, follow these steps in order:
-
-### 1. Choose Your Installation Method
-
-We provide two installation options depending on your experience level:
-
-- **[Option 1: Automated Installation via Script](option1.md)** - Recommended for beginners. Uses a pre-built script to install everything automatically.
-- **[Option 2: Installing from Source](option2.md)** - For advanced users who want full control over the installation process.
-
-**Start with Option 1** if you're unsure which to choose.
-
-### 2. Hardware Setup
-
-Before running any software:
-
-- Connect the PX100 arm to power
-- Connect the U2D2 controller to the arm
-- Connect the controller to your computer via USB
-- Verify the connection using `lsusb` command
-
-### 3. Verify Your Installation
-
-After installation, test that everything works:
-
-- Launch the control node and RViz
-- Try basic arm movements
-- Test the gripper functions
-
-### 4. Learn the Basics
-
-Once installed, get familiar with your arm:
-
-- **[Getting to Know Your PX100](Knowing%20your%20way%20around%20the%20Px100.md)** - Essential first steps, torque control, and basic operations
-- **[PX100 and Python](Px100%20and%20Python.md)** - Complete Python API reference for programming the arm
+Setup and usage guide for the Interbotix PX100 robotic arm on Ubuntu.
 
 ## Prerequisites
 
-- Ubuntu 22.04 LTS (recommended)
+- Ubuntu 22.04 LTS
 - ROS 2 Humble Hawksbill
 - Python 3.8+
-- Physical PX100 robotic arm (optional for simulation-only use)
+- PX100 robotic arm (optional for simulation)
 
-## Installation Options
+## Quick Start
 
-### Automated Installation (Beginner-Friendly)
-Perfect for users who want a quick setup without deep Linux knowledge.
+1. **Choose Installation**: Start with [Option 1: Automated Installation](option1.md) for beginners.
 
-[Read the full guide →](option1.md)
+2. **Hardware Setup**:
+   - Connect PX100 arm to power
+   - Connect U2D2 controller to arm and USB
+   - Run `lsusb` to verify connection
 
-### Manual Installation (Advanced)
-For developers who need custom configurations or want to understand every step.
+3. **Install Software**: Follow the chosen installation guide.
 
-[Read the full guide →](option2.md)
+4. **Test Installation**:
+   ```bash
+   ros2 launch interbotix_xsarm_control xsarm_control.launch.py robot_model:=px100
+   ```
+
+5. **Learn Basics**: Read [Getting Started Guide](Knowing%20your%20way%20around%20the%20Px100.md)
 
 ## Usage
 
-### Basic Control
+### Launch Control
 ```bash
-# Launch the arm control (replace with your choice)
+# Physical arm
 ros2 launch interbotix_xsarm_control xsarm_control.launch.py robot_model:=px100
 
-# Or for simulation
+# Simulation
 ros2 launch interbotix_xsarm_control xsarm_control.launch.py robot_model:=px100 use_sim:=true
 ```
 
-### Python Programming
+### Python Control
 ```python
 from interbotix_xs_modules.xs_robot.arm import InterbotixManipulatorXS
 
-# Initialize the arm
 bot = InterbotixManipulatorXS("px100", "arm", "gripper")
-
-# Move to home position
 bot.arm.go_to_home_pose()
-
-# Close gripper
 bot.gripper.grasp()
 ```
 
 ## Documentation
 
-- [Hardware Setup and First Steps](Knowing%20your%20way%20around%20the%20Px100.md)
-- [Complete Python API Reference](Px100%20and%20Python.md)
-- [Automated Installation Guide](option1.md)
-- [Manual Installation Guide](option2.md)
+- [Automated Installation](option1.md)
+- [Manual Installation](option2.md)
+- [First Steps & Controls](Knowing%20your%20way%20around%20the%20Px100.md)
+- [Python API Reference](Px100%20and%20Python.md)
 
 ## Troubleshooting
 
-Common issues and solutions:
+- **USB Issues**: Check U2D2 connection with `lsusb`
+- **ROS Errors**: Ensure packages installed and sourced
+- **Python Errors**: Verify environment setup
 
-- **USB Connection Issues**: Ensure the U2D2 is properly connected and recognized
-- **ROS 2 Errors**: Check that all packages are installed and sourced correctly
-- **Python Errors**: Verify your Python environment and dependencies
-
-## Support
-
-If you encounter issues:
-
-1. Check the troubleshooting sections in each guide
-2. Ensure all prerequisites are met
-3. Try the automated installation if manual fails
-4. Review the Python examples for correct usage
-
-## License
-
-This project uses the Interbotix PX100 robotic arm and related software. Please refer to Interbotix documentation for licensing information.
+For more help, check troubleshooting in each guide.
 
